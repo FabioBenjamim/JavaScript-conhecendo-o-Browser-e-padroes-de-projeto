@@ -6,52 +6,32 @@ class NegociacaoController {
         this._inputData = get('#data');
         this._inputQuantidade = get('#quantidade');
         this._inputValor = get('#valor');
-        //this.tbody = get('table tbody');
-        //Object.freeze(this);
+        this._listaNegociacoes = new ListaNegociacoes();
     }
 
     adicionar(event) {
         event.preventDefault();
+        let data = DateHelper.textoParaData(this._inputData.value);
 
-        //let data = new Date(...this._inputData.value.split('-').map((item, indice) => item - indice % 2));
+        this._listaNegociacoes.adicionar(this._criaNegociacao());
+        this._limpaFormulario();
 
-        let negociacao = new Negociacao(...
+        console.log(this._listaNegociacoes.negociacoes);
+    }
+
+    _criaNegociacao(){
+        return new Negociacao(
             data,
             this._inputQuantidade.value,
             this._inputValor.value
         );
-        
-        console.log(negociacao.data);
-
     }
-    
 
-/*
-document.querySelector('.form').addEventListener('submit', function(event) {
-    
-    event.preventDefault();
-    var tr = document.createElement('tr');
-    
-    campos.forEach(function(campo) {
+    _limpaFormulario(){
+        this._inputData.value = '';
+        this._inputQuantidade.value = 1;
+        this._inputValor.value = 0.0;
 
-        var td = document.createElement('td');
-        td.textContent = campo.value;
-        tr.appendChild(td);
-    });
-
-    var tdVolume = document.createElement('td');
-    tdVolume.textContent = campos[1].value * campos[2].value;
-    tr.appendChild(tdVolume);
-
-    tbody.appendChild(tr)
-
-    campos[0].value = '';
-    campos[1].value = 1;
-    campos[2].value = 0.0;
-
-    campos[0].focus();
-
-});
-*/
-
+        this._inputData.focus();
+    }
 }
